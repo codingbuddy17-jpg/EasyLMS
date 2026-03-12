@@ -10,6 +10,7 @@ Reduce ambiguity before implementation and lock the first build to a realistic, 
 
 - generic across domains
 - healthcare-friendly in examples and future specialization
+- API-first so the course engine can power future integrations
 
 ### Success criteria
 
@@ -51,6 +52,7 @@ At the end of Phase 0, the team should have enough clarity to start coding Phase
 - Prisma
 - PostgreSQL
 - local mock generation pipeline first
+- versioned API routes for backend capabilities
 
 ## Initial App Sections
 
@@ -83,6 +85,7 @@ The first code milestone should include:
 - modular services for extraction and generation
 - course content stored as structured data
 - extensible enough for background jobs later
+- UI treated as a client of the API rather than the source of truth
 
 ## Immediate Next Actions
 

@@ -3,11 +3,11 @@
 ## Status Overview
 
 - Phase 0: Completed
-- Phase 1: In progress
-- Phase 2: Not started
-- Phase 3: Not started
-- Phase 4: Not started
-- Phase 5: Not started
+- Phase 1: Completed
+- Phase 2: Completed
+- Phase 3: Completed
+- Phase 4: Completed
+- Phase 5: Completed
 - Phase 6: Not started
 - Phase 7: Not started
 
@@ -27,36 +27,37 @@
 - [x] Add TypeScript and Tailwind foundation
 - [x] Set up Prisma and PostgreSQL
 - [x] Create project creation flow
-- [ ] Create PDF upload flow
+- [x] Create PDF upload flow
 - [x] Add initial config form
 
 ## Phase 2 Checklist
 
-- [ ] Add PDF text extraction pipeline
-- [ ] Create source chunk model
-- [ ] Store extraction metadata
-- [ ] Add extraction status handling
+- [x] Move project APIs under `/api/v1`
+- [x] Add PDF text extraction pipeline
+- [x] Create source chunk model
+- [x] Store extraction metadata
+- [x] Add extraction status handling
 
 ## Phase 3 Checklist
 
-- [ ] Generate course title and summary
-- [ ] Generate learning objectives
-- [ ] Generate module and lesson outline
-- [ ] Build outline review screen
+- [x] Generate course title and summary
+- [x] Generate learning objectives
+- [x] Generate module and lesson outline
+- [x] Build outline review screen
 
 ## Phase 4 Checklist
 
-- [ ] Generate lesson content blocks
-- [ ] Generate quizzes
-- [ ] Generate summaries and key takeaways
-- [ ] Support strict and enhanced modes
+- [x] Generate lesson content blocks
+- [x] Generate quizzes
+- [x] Generate summaries and key takeaways
+- [x] Support strict and enhanced modes
 
 ## Phase 5 Checklist
 
-- [ ] Build LMS preview shell
-- [ ] Build lesson renderer
-- [ ] Add visual block library
-- [ ] Make preview responsive
+- [x] Build LMS preview shell
+- [x] Build lesson renderer
+- [x] Add visual block library
+- [x] Make preview responsive
 
 ## Phase 6 Checklist
 
@@ -66,6 +67,6 @@
 
 ## Phase 7 Checklist
 
-- [ ] Add JSON export
-- [ ] Add HTML export
+- [x] Add JSON export
+- [x] Add HTML export
 - [ ] Evaluate SCORM as a later extension

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { defaultCourseConfig } from "@/lib/mock-data";
 import type { CourseConfig } from "@/lib/types";
 
@@ -12,25 +13,67 @@ const quizOptions: CourseConfig["quizDensity"][] = ["Low", "Medium", "High"];
 const modeOptions: CourseConfig["mode"][] = ["Strict", "Enhanced"];
 
 export function ProjectForm() {
+  const router = useRouter();
   const [config, setConfig] = useState<CourseConfig>(defaultCourseConfig);
+  const [sourceFile, setSourceFile] = useState<File | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   function updateField<K extends keyof CourseConfig>(field: K, value: CourseConfig[K]) {
     setConfig((current) => ({ ...current, [field]: value }));
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!sourceFile) {
+      setErrorMessage("Attach a PDF to create the project.");
+      return;
+    }
+
+    setIsSaving(true);
+    setErrorMessage(null);
+
+    const formData = new FormData();
+    formData.set("title", config.title);
+    formData.set("audience", config.audience);
+    formData.set("difficulty", config.difficulty);
+    formData.set("tone", config.tone);
+    formData.set("duration", config.duration);
+    formData.set("outputStyle", config.outputStyle);
+    formData.set("quizDensity", config.quizDensity);
+    formData.set("mode", config.mode);
+    formData.set("source", sourceFile);
+
+    const response = await fetch("/api/v1/projects", {
+      method: "POST",
+      body: formData
+    });
+
+    const payload = (await response.json()) as { error?: string; data?: { projectId?: string } };
+
+    if (!response.ok || !payload.data?.projectId) {
+      setErrorMessage(payload.error ?? "Something went wrong while saving the project.");
+      setIsSaving(false);
+      return;
+    }
+
+    router.push(`/projects/${payload.data.projectId}`);
   }
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
       <section className="rounded-[2rem] border border-black/10 bg-white p-6 shadow-[0_20px_80px_-45px_rgba(15,23,42,0.45)]">
         <div className="mb-6">
-          <p className="text-sm uppercase tracking-[0.25em] text-amber-700">Phase 1 scaffold</p>
-          <h1 className="mt-2 font-serif text-4xl text-stone-900">Create a new AI course project</h1>
+          <p className="text-sm uppercase tracking-[0.25em] text-amber-700">New Course</p>
+          <h1 className="mt-2 font-serif text-4xl text-stone-900">Create a course from your PDF</h1>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-stone-600">
-            This screen establishes the project shape for PDF upload, configuration, and later outline generation.
-            The form is wired with typed state first so we can connect persistence next.
+            Upload a source document, define the learning setup, and generate a draft course workspace you can review
+            and refine.
           </p>
         </div>
 
-        <div className="grid gap-5">
+        <form className="grid gap-5" onSubmit={handleSubmit}>
           <label className="grid gap-2">
             <span className="text-sm font-medium text-stone-800">Course title</span>
             <input
@@ -90,33 +133,52 @@ export function ProjectForm() {
           </div>
 
           <label className="grid gap-2">
-            <span className="text-sm font-medium text-stone-800">Source upload placeholder</span>
-            <div className="rounded-[1.5rem] border border-dashed border-stone-300 bg-stone-50 p-5 text-sm text-stone-500">
-              PDF upload lands here in the next step. For now, this scaffold defines the layout and adjacent
-              project settings so the upload flow can be added cleanly.
+            <span className="text-sm font-medium text-stone-800">Source PDF</span>
+            <div className="rounded-[1.5rem] border border-dashed border-stone-300 bg-stone-50 p-5">
+              <input
+                type="file"
+                accept="application/pdf"
+                onChange={(event) => setSourceFile(event.target.files?.[0] ?? null)}
+                className="block w-full text-sm text-stone-600 file:mr-4 file:rounded-full file:border-0 file:bg-stone-900 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-stone-700"
+              />
+              <p className="mt-3 text-sm leading-6 text-stone-500">
+                Upload one PDF to start. The document will be used to extract source material for course generation.
+              </p>
+              {sourceFile ? (
+                <p className="mt-2 text-sm font-medium text-stone-800">
+                  Attached: {sourceFile.name} ({Math.max(1, Math.round(sourceFile.size / 1024))} KB)
+                </p>
+              ) : null}
             </div>
           </label>
 
+          {errorMessage ? (
+            <div className="rounded-[1.25rem] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+              {errorMessage}
+            </div>
+          ) : null}
+
           <div className="flex flex-wrap gap-3 pt-2">
             <button
-              type="button"
+              type="submit"
+              disabled={isSaving}
               className="rounded-full bg-stone-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-stone-700"
             >
-              Save project scaffold
+              {isSaving ? "Saving project..." : "Create project"}
             </button>
             <Link
               href="/demo/outline"
               className="rounded-full border border-stone-300 px-5 py-3 text-sm font-medium text-stone-700 transition hover:border-stone-900 hover:text-stone-900"
             >
-              View generated outline demo
+              View sample outline
             </Link>
           </div>
-        </div>
+        </form>
       </section>
 
       <aside className="space-y-5">
         <div className="rounded-[2rem] bg-stone-900 p-6 text-stone-100 shadow-[0_20px_80px_-45px_rgba(15,23,42,0.7)]">
-          <p className="text-sm uppercase tracking-[0.25em] text-amber-300">Live project brief</p>
+          <p className="text-sm uppercase tracking-[0.25em] text-amber-300">Course Snapshot</p>
           <h2 className="mt-3 font-serif text-3xl">{config.title || "Untitled course"}</h2>
           <p className="mt-4 text-sm leading-6 text-stone-300">
             Audience: {config.audience || "Not set yet"}
@@ -131,11 +193,11 @@ export function ProjectForm() {
         </div>
 
         <div className="rounded-[2rem] border border-amber-200 bg-amber-50 p-6">
-          <h3 className="font-serif text-2xl text-stone-900">What this phase gives us</h3>
+          <h3 className="font-serif text-2xl text-stone-900">What happens next</h3>
           <ul className="mt-4 space-y-3 text-sm leading-6 text-stone-700">
-            <li>Typed project configuration aligned with our blueprint.</li>
-            <li>A stable entry point for real upload and database wiring.</li>
-            <li>A clear bridge into outline generation and preview routes.</li>
+            <li>Your PDF is saved into a course workspace.</li>
+            <li>The source content can be extracted into structured chunks.</li>
+            <li>You can generate an outline before moving into lesson creation.</li>
           </ul>
         </div>
       </aside>
@@ -177,4 +239,3 @@ function Fieldset<T extends string>({ label, value, options, onChange }: Fieldse
     </fieldset>
   );
 }
-

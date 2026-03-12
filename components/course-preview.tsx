@@ -45,7 +45,7 @@ export function CoursePreview() {
   );
 }
 
-function BlockRenderer({ block }: { block: ContentBlock }) {
+export function BlockRenderer({ block }: { block: ContentBlock }) {
   switch (block.type) {
     case "hero":
       return (

@@ -2,7 +2,9 @@
 
 ## 1. Product Summary
 
-EasyLMS is an AI-powered authoring portal that converts uploaded PDF training material into a structured, editable, engagement-driven LMS course.
+EasyLMS is an API-first AI course generation platform that converts uploaded PDF training material into a structured, editable, engagement-driven LMS course.
+
+The web app is the first client of the platform, not the platform itself.
 
 The core promise for the first release is:
 
@@ -38,6 +40,18 @@ Success means the output is:
 - editable by humans
 - traceable back to source content
 - reusable for future export formats
+- accessible through stable APIs for future integrations
+
+## 3.1 Platform Strategy
+
+EasyLMS should be built as a backend course-generation engine with a thin first-party web experience on top.
+
+That means:
+
+- business logic belongs in reusable services
+- data contracts should be stable and versioned
+- API routes should model the generation pipeline directly
+- the web UI should consume the same APIs future integrations will use
 
 ## 4. Product Principles
 
@@ -56,6 +70,10 @@ The platform should store courses as structured JSON, not large blobs of generat
 ### 4.4 Premium experience over feature overload
 
 V1 should focus on a small set of high-quality interactions and a polished visual renderer rather than a broad list of unfinished LMS features.
+
+### 4.5 API-first architecture
+
+All core operations should be expressible as backend endpoints and job flows, even if the first UI is embedded in the same Next.js app.
 
 ## 5. Target Users
 
@@ -185,6 +203,17 @@ The system turns modules into learner-facing content with:
 
 The user reviews the course in a polished LMS player-style experience and can later edit sections selectively.
 
+### 8.7 Integration workflow
+
+Future clients should be able to:
+
+1. create a project through the API
+2. upload source material
+3. trigger extraction and generation jobs
+4. poll or receive job updates
+5. retrieve outline and course artifacts
+6. export or embed generated course output
+
 ## 9. Phased Delivery Plan
 
 ## Phase 0: Product definition
@@ -207,6 +236,7 @@ Set up the application shell and persistence model.
 Deliverables:
 
 - Next.js app scaffold
+- versioned API route foundation
 - TypeScript setup
 - Tailwind styling foundation
 - Prisma schema
@@ -217,11 +247,12 @@ Deliverables:
 ## Phase 2: PDF ingestion and normalization
 
 Goal:
-Turn PDFs into clean structured source data.
+Turn PDFs into clean structured source data through API-driven ingestion workflows.
 
 Deliverables:
 
 - PDF upload workflow
+- API endpoint for ingestion
 - text extraction service
 - chunking and segmentation
 - section detection
@@ -235,6 +266,7 @@ Generate a high-quality, reviewable instructional design outline.
 
 Deliverables:
 
+- API endpoint for outline generation
 - learning objective generation
 - course summary generation
 - module and lesson outline generation
@@ -248,6 +280,7 @@ Transform the outline into learner-facing lesson content.
 
 Deliverables:
 
+- API endpoint for course generation
 - lesson content blocks
 - summaries
 - key points
@@ -294,6 +327,17 @@ Deliverables:
 
 ## 10. Recommended Technical Architecture
 
+## 10.0 Architectural stance
+
+EasyLMS should be delivered as a modular monolith first:
+
+- one deployable application
+- shared codebase for UI and API
+- explicit service boundaries
+- versioned API contracts
+
+This gives us speed now without blocking a future split into dedicated API workers or external SDKs.
+
 ## 10.1 Frontend
 
 - Next.js App Router
@@ -311,7 +355,7 @@ Why:
 
 ## 10.2 Backend
 
-- Next.js route handlers and server actions for early phases
+- Next.js route handlers for versioned APIs
 - service modules for ingestion and generation logic
 - background jobs later via BullMQ and Redis
 
@@ -320,6 +364,20 @@ Why:
 - keeps early implementation simple
 - avoids premature microservices
 - makes queue migration easier later
+- lets the web app call the same backend contract future clients will use
+
+### 10.2.1 Initial API surface
+
+Recommended initial routes:
+
+- `POST /api/v1/projects`
+- `GET /api/v1/projects/:projectId`
+- `POST /api/v1/projects/:projectId/documents`
+- `POST /api/v1/projects/:projectId/extract`
+- `POST /api/v1/projects/:projectId/outline`
+- `POST /api/v1/projects/:projectId/course`
+- `GET /api/v1/jobs/:jobId`
+- `GET /api/v1/projects/:projectId/course`
 
 ## 10.3 Database
 
@@ -354,6 +412,8 @@ Stages:
 4. lesson generation
 5. assessment generation
 6. content block packaging
+
+Each stage should eventually be callable as an API job, not just as internal UI logic.
 
 ## 11. Core Data Model
 
@@ -617,4 +677,3 @@ The MVP is done when:
 3. receives a useful AI-generated outline
 4. previews polished lesson content for at least one generated module
 5. can inspect structured course data
-

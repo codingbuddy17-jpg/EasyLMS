@@ -6,8 +6,8 @@ export default function DemoOutlinePage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-sm uppercase tracking-[0.25em] text-stone-500">Phase 3 target</p>
-          <h1 className="mt-2 font-serif text-4xl text-stone-900">Outline review experience</h1>
+          <p className="text-sm uppercase tracking-[0.25em] text-stone-500">Sample Output</p>
+          <h1 className="mt-2 font-serif text-4xl text-stone-900">Outline review preview</h1>
         </div>
         <Link
           href="/demo/course"
@@ -21,4 +21,3 @@ export default function DemoOutlinePage() {
     </div>
   );
 }
-

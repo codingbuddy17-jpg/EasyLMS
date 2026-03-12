@@ -74,11 +74,19 @@ export type ContentBlock =
       items: string[];
     };
 
+export type SourceReference = {
+  documentId: string;
+  pageNumber: number;
+  sectionTitle?: string | null;
+  excerpt: string;
+};
+
 export type CourseLesson = {
   id: string;
   title: string;
   durationMinutes: number;
   contentBlocks: ContentBlock[];
+  sourceRefs: SourceReference[];
 };
 
 export type CourseModule = {
@@ -96,4 +104,3 @@ export type GeneratedCourse = {
   objectives: string[];
   modules: CourseModule[];
 };
-

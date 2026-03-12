@@ -1,8 +1,8 @@
 import type { CourseConfig, CourseOutline, GeneratedCourse } from "@/lib/types";
 
 export const defaultCourseConfig: CourseConfig = {
-  title: "Clinical Documentation Fundamentals",
-  audience: "Operations and healthcare training teams",
+  title: "",
+  audience: "",
   difficulty: "Beginner",
   tone: "Professional",
   duration: "45 minutes",
@@ -12,31 +12,31 @@ export const defaultCourseConfig: CourseConfig = {
 };
 
 export const mockOutline: CourseOutline = {
-  title: "Clinical Documentation Fundamentals",
+  title: "Operational Excellence Fundamentals",
   subtitle: "A source-grounded starter course generated from training PDFs",
-  audience: "Operations and healthcare training teams",
+  audience: "Operations and enablement teams",
   totalMinutes: 45,
   objectives: [
-    "Explain why documentation quality matters in operational and clinical workflows.",
-    "Identify the core components of complete and accurate source documentation.",
-    "Apply a simple review lens before handing work to coding or compliance teams."
+    "Explain how source material becomes a learner-ready course structure.",
+    "Identify the key concepts and supporting examples within a training document.",
+    "Apply a repeatable review lens before publishing learner-facing content."
   ],
   modules: [
     {
       id: "module-1",
-      title: "Why Documentation Quality Matters",
-      summary: "Introduces the business, quality, and communication impact of better documentation.",
+      title: "Why Source Quality Matters",
+      summary: "Introduces the downstream impact of clear, complete, and well-structured source material.",
       estimatedMinutes: 12,
       lessons: [
         {
           id: "lesson-1",
           title: "The cost of unclear source material",
-          promise: "Learners understand how incomplete documentation creates downstream rework.",
+          promise: "Learners understand how incomplete content creates downstream rework.",
           interaction: "Knowledge check"
         },
         {
           id: "lesson-2",
-          title: "What strong documentation looks like",
+          title: "What strong source content looks like",
           promise: "Learners learn a memorable quality checklist.",
           interaction: "Key-points card"
         }
@@ -45,7 +45,7 @@ export const mockOutline: CourseOutline = {
     {
       id: "module-2",
       title: "Building a Reliable Review Habit",
-      summary: "Translates source guidance into an easy review workflow before submission or handoff.",
+      summary: "Translates source guidance into an easy review workflow before publishing or handoff.",
       estimatedMinutes: 18,
       lessons: [
         {
@@ -96,13 +96,21 @@ export const mockCourse: GeneratedCourse = {
           id: "lesson-1",
           title: "The cost of unclear source material",
           durationMinutes: 6,
+          sourceRefs: [
+            {
+              documentId: "demo-document",
+              pageNumber: 1,
+              sectionTitle: "Source quality",
+              excerpt: "Weak source material creates confusion, rework, and a less trustworthy learning experience."
+            }
+          ],
           contentBlocks: [
             {
               type: "hero",
               eyebrow: "Module 1",
-              title: "Documentation quality is operational quality",
+              title: "Source quality drives learning quality",
               body:
-                "Poor source material does not stay local to one team. It creates coding delays, compliance risk, rework, and weaker learner confidence."
+                "Weak source material does not stay local to one team. It creates confusion, rework, and a less trustworthy learning experience."
             },
             {
               type: "richText",
@@ -125,7 +133,7 @@ export const mockCourse: GeneratedCourse = {
               type: "exampleCard",
               title: "In practice",
               body:
-                "A vague summary note may seem small, but it can force downstream teams to pause, clarify intent, and revisit the record before they can continue."
+                "A vague training note may seem small, but it can force downstream teams to pause, clarify intent, and revisit the source before they can continue."
             },
             {
               type: "warningCard",
@@ -136,7 +144,7 @@ export const mockCourse: GeneratedCourse = {
             {
               type: "quiz",
               title: "Quick check",
-              question: "What is the best reason to improve documentation quality at the source?",
+              question: "What is the best reason to improve source quality at the start?",
               options: [
                 "It reduces the need for collaboration.",
                 "It minimizes downstream confusion and rework.",
@@ -162,4 +170,3 @@ export const mockCourse: GeneratedCourse = {
     }
   ]
 };
-

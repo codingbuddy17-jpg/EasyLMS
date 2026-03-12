@@ -1,0 +1,41 @@
+{
+  "id": "da2c2427-c57c-4d07-83d5-bf284685429d",
+  "title": "Clinical Documentation Fundamentals",
+  "status": "draft",
+  "config": {
+    "title": "Clinical Documentation Fundamentals",
+    "audience": "Operations and healthcare training teams",
+    "difficulty": "Intermediate",
+    "tone": "Professional",
+    "duration": "45 minutes",
+    "outputStyle": "Standard module",
+    "quizDensity": "Low",
+    "mode": "Strict"
+  },
+  "documents": [
+    {
+      "id": "01df5a93-a736-4592-be20-45db5c07041a",
+      "fileName": "icd_10_cm_october_2025_guidelines_0.pdf",
+      "fileType": "application/pdf",
+      "fileSize": 838642,
+      "relativePath": "da2c2427-c57c-4d07-83d5-bf284685429d/01df5a93-a736-4592-be20-45db5c07041a-icd_10_cm_october_2025_guidelines_0.pdf",
+      "uploadedAt": "2026-03-12T10:26:58.384Z",
+      "extractionStatus": "failed",
+      "chunks": [],
+      "extractionError": "Setting up fake worker failed: \"Cannot find module '/Users/harishchunduri/Projects/EasyLMS/.next/server/chunks/pdf.worker.mjs' imported from /Users/harishchunduri/Projects/EasyLMS/.next/server/chunks/node_modules_pdfjs-dist_legacy_build_pdf_mjs_ea1d3a35._.js\"."
+    }
+  ],
+  "jobs": [
+    {
+      "id": "fc85839a-afbd-4d6f-8ce0-667ea37028d9",
+      "type": "EXTRACTION",
+      "status": "failed",
+      "documentId": "01df5a93-a736-4592-be20-45db5c07041a",
+      "startedAt": "2026-03-12T10:27:19.927Z",
+      "completedAt": "2026-03-12T10:27:19.934Z",
+      "errorMessage": "Setting up fake worker failed: \"Cannot find module '/Users/harishchunduri/Projects/EasyLMS/.next/server/chunks/pdf.worker.mjs' imported from /Users/harishchunduri/Projects/EasyLMS/.next/server/chunks/node_modules_pdfjs-dist_legacy_build_pdf_mjs_ea1d3a35._.js\"."
+    }
+  ],
+  "createdAt": "2026-03-12T10:26:58.384Z",
+  "updatedAt": "2026-03-12T10:27:19.935Z"
+}

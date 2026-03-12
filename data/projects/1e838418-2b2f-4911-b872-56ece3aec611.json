@@ -1,0 +1,41 @@
+{
+  "id": "1e838418-2b2f-4911-b872-56ece3aec611",
+  "title": "ICD 2026",
+  "status": "draft",
+  "config": {
+    "title": "ICD 2026",
+    "audience": "Medical Coder",
+    "difficulty": "Intermediate",
+    "tone": "Professional",
+    "duration": "45 minutes",
+    "outputStyle": "Standard module",
+    "quizDensity": "Low",
+    "mode": "Strict"
+  },
+  "documents": [
+    {
+      "id": "2d653d6b-7177-4d12-ad8d-26af129b62e2",
+      "fileName": "icd_10_cm_october_2025_guidelines_0.pdf",
+      "fileType": "application/pdf",
+      "fileSize": 838642,
+      "relativePath": "1e838418-2b2f-4911-b872-56ece3aec611/2d653d6b-7177-4d12-ad8d-26af129b62e2-icd_10_cm_october_2025_guidelines_0.pdf",
+      "uploadedAt": "2026-03-12T10:41:22.813Z",
+      "extractionStatus": "failed",
+      "chunks": [],
+      "extractionError": "Cannot transfer object of unsupported type."
+    }
+  ],
+  "jobs": [
+    {
+      "id": "afb7b60e-1c02-4d4f-a45b-62415c58c12a",
+      "type": "EXTRACTION",
+      "status": "failed",
+      "documentId": "2d653d6b-7177-4d12-ad8d-26af129b62e2",
+      "startedAt": "2026-03-12T10:41:26.527Z",
+      "completedAt": "2026-03-12T10:41:26.543Z",
+      "errorMessage": "Cannot transfer object of unsupported type."
+    }
+  ],
+  "createdAt": "2026-03-12T10:41:22.813Z",
+  "updatedAt": "2026-03-12T10:41:26.796Z"
+}

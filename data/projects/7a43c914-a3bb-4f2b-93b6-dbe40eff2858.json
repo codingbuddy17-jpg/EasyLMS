@@ -1,0 +1,30 @@
+{
+  "id": "7a43c914-a3bb-4f2b-93b6-dbe40eff2858",
+  "title": "ICD 2026",
+  "status": "draft",
+  "config": {
+    "title": "ICD 2026",
+    "audience": "Operations and healthcare training teams",
+    "difficulty": "Beginner",
+    "tone": "Professional",
+    "duration": "45 minutes",
+    "outputStyle": "Standard module",
+    "quizDensity": "Medium",
+    "mode": "Strict"
+  },
+  "documents": [
+    {
+      "id": "83960273-5682-45a7-a3a9-af03f4a8ee1a",
+      "fileName": "icd_10_cm_october_2025_guidelines_0.pdf",
+      "fileType": "application/pdf",
+      "fileSize": 838642,
+      "relativePath": "7a43c914-a3bb-4f2b-93b6-dbe40eff2858/83960273-5682-45a7-a3a9-af03f4a8ee1a-icd_10_cm_october_2025_guidelines_0.pdf",
+      "uploadedAt": "2026-03-12T10:26:02.684Z",
+      "extractionStatus": "pending",
+      "chunks": []
+    }
+  ],
+  "jobs": [],
+  "createdAt": "2026-03-12T10:26:02.684Z",
+  "updatedAt": "2026-03-12T10:26:02.684Z"
+}
