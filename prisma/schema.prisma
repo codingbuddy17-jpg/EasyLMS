@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String          @id @default(cuid())
+  email     String          @unique
+  name      String?
+  projects  CourseProject[]
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+}
+
+model CourseProject {
+  id             String           @id @default(cuid())
+  userId         String?
+  title          String
+  status         ProjectStatus    @default(DRAFT)
+  sourceMode     SourceMode       @default(STRICT)
+  configJson     Json
+  currentVersion Int              @default(1)
+  user           User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
+  documents      SourceDocument[]
+  jobs           GenerationJob[]
+  versions       CourseVersion[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+model SourceDocument {
+  id               String           @id @default(cuid())
+  projectId        String
+  fileName         String
+  fileType         String
+  storageKey       String
+  pageCount        Int?
+  extractionStatus ExtractionStatus @default(PENDING)
+  project          CourseProject    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  chunks           SourceChunk[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+model SourceChunk {
+  id           String         @id @default(cuid())
+  documentId   String
+  pageStart    Int?
+  pageEnd      Int?
+  sectionTitle String?
+  content      String
+  metadataJson Json?
+  document     SourceDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  createdAt    DateTime       @default(now())
+}
+
+model GenerationJob {
+  id           String        @id @default(cuid())
+  projectId    String
+  jobType      JobType
+  status       JobStatus     @default(PENDING)
+  inputJson    Json?
+  outputJson   Json?
+  errorMessage String?
+  startedAt    DateTime?
+  completedAt  DateTime?
+  project      CourseProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model CourseVersion {
+  id            String        @id @default(cuid())
+  projectId     String
+  versionNumber Int
+  outlineJson   Json?
+  courseJson    Json?
+  project       CourseProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt     DateTime      @default(now())
+
+  @@unique([projectId, versionNumber])
+}
+
+enum ProjectStatus {
+  DRAFT
+  PROCESSING
+  READY
+  FAILED
+}
+
+enum SourceMode {
+  STRICT
+  ENHANCED
+}
+
+enum ExtractionStatus {
+  PENDING
+  PROCESSING
+  COMPLETE
+  FAILED
+}
+
+enum JobType {
+  INGESTION
+  EXTRACTION
+  OUTLINE_GENERATION
+  COURSE_GENERATION
+}
+
+enum JobStatus {
+  PENDING
+  RUNNING
+  COMPLETE
+  FAILED
+}
+
